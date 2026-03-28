@@ -2,13 +2,10 @@ spring:
   application:
     name: backend
 
-  #bean creation is taken care by Spring itself , just specify the base url and model
+  output:
+    ansi:
+      enabled: ALWAYS # Options are: ALWAYS, DETECT, NEVER
 
-  ai:
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        options:
-          model: llama3.2
-          temperature: 0.5
-
+#logging:
+#  pattern:
+#    console: "%blue(%d{HH:mm:ss}){blue} %green(%-5level) %green([%thread]){magenta} %black(%logger{36}){cyan} - %msg%n"
