@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: backend
+
+  #bean creation is taken care by Spring itself , just specify the base url and model
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: llama3.2
+          temperature: 0.5
+
