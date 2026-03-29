@@ -1,12 +1,16 @@
 package com.aiservice.backend.config;
 
+import com.aiservice.backend.advisors.TokenAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class OllamaConfig {
@@ -31,7 +35,14 @@ public class OllamaConfig {
          */
 
         return chatClientBuilder
-                .defaultAdvisors(SimpleLoggerAdvisor.builder().build())
+                .defaultAdvisors(
+                        SimpleLoggerAdvisor.builder().build(), // for logging request and response
+                        SafeGuardAdvisor.builder()             // for guard railing use of sensitive words
+                                .sensitiveWords(List.of("Assault","Books"))
+                                .order(2)
+                                .build(),
+                        TokenAuditAdvisor.builder().build()    // Custom Advisor used for auditing tokens
+                )
                 .defaultSystem("""
                         You are a Senior Developer expertise is SpringBoot,
                         If you asks questions related to anything else, Instruct them clearly that you are not designed for it.
