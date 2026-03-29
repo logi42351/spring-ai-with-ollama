@@ -2,10 +2,17 @@ spring:
   application:
     name: backend
 
+#To enforce Colours in terminal logs
   output:
     ansi:
       enabled: ALWAYS # Options are: ALWAYS, DETECT, NEVER
 
+# To see the logs given by SimpleLoggerAdvisor which we configured in ChatClient
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
+#To customize logs and colour
 #logging:
 #  pattern:
 #    console: "%blue(%d{HH:mm:ss}){blue} %green(%-5level) %green([%thread]){magenta} %black(%logger{36}){cyan} - %msg%n"

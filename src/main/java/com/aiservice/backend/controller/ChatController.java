@@ -29,6 +29,12 @@ public class ChatController {
     @Value("classpath:/promptTemplates/UserPrompt.st")
     private Resource userTemplate;
 
+    /**
+     * Prompt Stuffing for system , that is giving the answer book before looking into the question
+     */
+    @Value("classpath:/promptTemplates/SystemPrompt.st")
+    private Resource systemTemplate;
+
 
     /**
      * A Simple Get API with a prompt from user
@@ -43,6 +49,7 @@ public class ChatController {
 
         return chatClient
                 .prompt()
+                .system(systemTemplate)
                 .user(
                         promptUserSpec -> promptUserSpec.text(userTemplate)
                                 .params(
